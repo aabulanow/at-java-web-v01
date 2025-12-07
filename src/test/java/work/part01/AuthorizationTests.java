@@ -44,4 +44,12 @@ class AuthorizationTests {
         $x("//p[@class='info-text']").shouldHave(exactText("Это первый информационный текст."));
     }
 
+    @Test
+    public void testFindByText() {
+        open("https://slqa.ru/cases/xPathSimpleForm/");
+        $x("//*[starts-with(.,'Казахстан')]").shouldHave(text("площадь 2 724 902"));
+
+    }
+
 }
+
