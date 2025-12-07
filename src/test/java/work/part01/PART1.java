@@ -1,0 +1,21 @@
+package work.part01;
+import org.junit.jupiter.api.Test;
+import static com.codeborne.selenide.Selenide.*;
+public class PART1 {
+    @Test
+    void testNavigation() {
+        open("https://ya.ru/");
+        sleep(3_000);
+        open("https://ru.wikipedia.org");
+        sleep(3_000);
+        open("https://ru.wikipedia.org/wiki/Selenium");
+        sleep(3_000);
+        back();
+        sleep(3_000);
+        back();
+        sleep(3_000);
+        forward();
+        sleep(10_000);
+    }
+
+}
