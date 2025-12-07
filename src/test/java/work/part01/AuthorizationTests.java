@@ -36,4 +36,12 @@ class AuthorizationTests {
         $x("//h1").shouldHave(text("Учебная страница для XPath"));
         $x("//h1").shouldHave(exactText("Учебная страница для XPath"));
     }
+
+    @Test
+    public void testSpecialParagraph() {
+        open("https://slqamsk.github.io/tmp/xPath01.html");
+        $x("//p[@class='special-paragraph']").shouldHave(exactText("Этот параграф особенный - он единственный на странице с таким классом."));
+        $x("//p[@class='info-text']").shouldHave(exactText("Это первый информационный текст."));
+    }
+
 }
