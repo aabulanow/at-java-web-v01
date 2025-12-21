@@ -114,4 +114,44 @@ public class SimpleFlightsTests {
         alert.accept();
         $("#registrationMessage").shouldHave(text("Регистрация успешно завершена!"));
     }
+
+
+    // 3. Не найдены рейсы
+    @Test
+    void test06FlightsNotFound() {
+        //Страница логина
+        $("#username").setValue("standard_user");
+        $("#password").setValue("stand_pass1");
+        $("#loginButton").click();
+        $("#greeting").shouldHave(text("Добро пожаловать, Иванов Иван Иванович!"));
+
+        //Страница поиска
+        $("#departureCity").selectOption("Казань");
+        $("#arrivalCity").selectOption("Париж");
+        $("#departureDate").setValue("16.03.2026");
+        $x("//button[.='Найти']").click();
+
+        //Страница списка рейсов
+        $("#flightsTable").shouldHave(text("Рейсов по вашему запросу не найдено."));
+    }
+
+    @Test
+    void test07FlightsNotFound() {
+        //Страница логина
+        $("#username").setValue("standard_user");
+        $("#password").setValue("stand_pass1");
+        $("#loginButton").click();
+        $("#greeting").shouldHave(text("Добро пожаловать, Иванов Иван Иванович!"));
+
+        //Страница поиска
+        $("#departureCity").selectOption("Казань");
+        $("#arrivalCity").selectOption("Париж");
+        $("#departureDate").setValue("16.03.2025");
+        $x("//button[.='Найти']").click();
+
+        //Страница списка рейсов
+        $("#flightsTable").shouldHave(text("Невозможно осуществить поиск: выбранная дата уже прошла."));
+    }
+
+
 }

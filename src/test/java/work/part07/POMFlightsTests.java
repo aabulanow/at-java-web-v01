@@ -1,19 +1,5 @@
-package work.part01;
+package work.part07;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.openqa.selenium.Alert;
-
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import demo.part07.pages.FlightsListPage;
 import demo.part07.pages.LoginPage;
@@ -21,6 +7,14 @@ import demo.part07.pages.RegistrationPage;
 import demo.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static java.awt.geom.Path2D.contains;
 
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
@@ -114,5 +108,20 @@ public class POMFlightsTests {
         registrationPage.isErrorFillAllFied();
     }
 
+    @Test
+    void test07() {
+        LoginPage loginPage = new LoginPage();
+        loginPage.login("standard_user", "stand_pass1");
+        loginPage.isLoginSuccessful("Иванов Иван Иванович");
+
+        SearchPage searchPage = new SearchPage();
+        searchPage.search("16.03.2025", "Казань", "Париж");
+        $("#searchMessage").shouldHave(text("Невозможно осуществить поиск: выбранная дата уже прошла."));
+    }
+
 
 }
+
+
+
+
