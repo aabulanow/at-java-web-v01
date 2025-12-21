@@ -14,7 +14,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static java.awt.geom.Path2D.contains;
+
 
 
 @TestMethodOrder(MethodOrderer.DisplayName.class)
@@ -107,16 +107,15 @@ public class POMFlightsTests {
         registrationPage.registration("", "", "", "");
         registrationPage.isErrorFillAllFied();
     }
-
     @Test
-    void test07() {
+    void test06() {
         LoginPage loginPage = new LoginPage();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
         SearchPage searchPage = new SearchPage();
-        searchPage.search("16.03.2025", "Казань", "Париж");
-        $("#searchMessage").shouldHave(text("Невозможно осуществить поиск: выбранная дата уже прошла."));
+        searchPage.search("01.01.2024");
+        searchPage.isDateInPast();
     }
 
 

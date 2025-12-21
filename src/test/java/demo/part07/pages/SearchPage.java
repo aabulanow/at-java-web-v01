@@ -45,4 +45,8 @@ public class SearchPage {
         }
         return date;
     }
+
+
+    public void isDateInPast() {this.message.shouldHave(text("Невозможно осуществить поиск: выбранная дата уже прошла."));
+    }
 }
