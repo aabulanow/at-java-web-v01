@@ -2,17 +2,19 @@ package work.part07;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
 import demo.part07.pages.FlightsListPage;
-import demo.part07.pages.LoginPage;
 import demo.part07.pages.RegistrationPage;
 import demo.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import work.part07.pages.FlightsListPageHT;
+import work.part07.pages.LoginPageHT;
+import work.part07.pages.RegistrationPageHT;
+import work.part07.pages.SearchPageHT;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
@@ -33,7 +35,7 @@ public class POMFlightsTests {
     // 1. Неуспешный логин
     @Test
     void test01WrongPassword() {
-        LoginPage loginPage = new LoginPage();
+        LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "WrongPassword");
         loginPage.isLoginUnsuccessful();
     }
@@ -41,7 +43,7 @@ public class POMFlightsTests {
     // 2. Не задана дата
     @Test
     void test02NoDate() {
-        LoginPage loginPage = new LoginPage();
+        LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
@@ -52,7 +54,7 @@ public class POMFlightsTests {
     // 3. Не найдены рейсы
     @Test
     void test03FlightsNotFound() {
-        LoginPage loginPage = new LoginPage();
+        LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
@@ -67,7 +69,7 @@ public class POMFlightsTests {
     @Test
     void test04SuccessRegistrationDefault() {
         // Страница логина
-        LoginPage loginPage = new LoginPage();
+        LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
@@ -76,20 +78,24 @@ public class POMFlightsTests {
         searchPage.search("16.03.2026", "Москва", "Нью-Йорк");
 
         // Страница со списком найденных рейсов
-        FlightsListPage flightsList = new FlightsListPage();
+        FlightsListPageHT flightsList = new FlightsListPageHT();
         flightsList.registerToFirstFlight();
 
         // Страница регистрации на рейс
-        RegistrationPage registrationPage = new RegistrationPage();
+        RegistrationPageHT registrationPage = new RegistrationPageHT();
         registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
         registrationPage.successDefaultRegistration();
+        // Кнопка логоаута
+        LoginPageHT logout = new LoginPageHT();
+        loginPage.logout();
+
     }
 
     // 5. Пустые поля
     @Test
     void test05EmptyField() {
         // Страница логина
-        LoginPage loginPage = new LoginPage();
+        LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
@@ -109,7 +115,7 @@ public class POMFlightsTests {
     }
     @Test
     void test06() {
-        LoginPage loginPage = new LoginPage();
+        LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");
         loginPage.isLoginSuccessful("Иванов Иван Иванович");
 
@@ -118,6 +124,69 @@ public class POMFlightsTests {
         searchPage.isDateInPast();
     }
 
+    @Test
+    void test07() {
+        LoginPageHT loginPage = new LoginPageHT();
+        loginPage.login("locked_out_user", "lock_pass2");
+        loginPage.isUserIsLocked();
+
+    }
+
+    // 5. проверка параметров
+    @Test
+    void test09() {
+        // Страница логина
+        LoginPageHT loginPage = new LoginPageHT();
+        loginPage.login("standard_user", "stand_pass1");
+        loginPage.isLoginSuccessful("Иванов Иван Иванович");
+
+        // Страница поиска рейсов
+        SearchPageHT searchPage = new SearchPageHT();
+        searchPage.search("16.03.2026", "Москва", "Нью-Йорк");
+
+        // Страница со списком найденных рейсов
+        FlightsListPageHT flightsList = new FlightsListPageHT();
+        flightsList.registerToFirstFlight();
+
+        // Страница регистрации на рейс
+        RegistrationPageHT registrationPage = new RegistrationPageHT();
+        registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
+        registrationPage.changeRegistrationParams("Буланов Андрей Анатольевич","1111 111111", "a.a.bulanow@gmail.com","89170304453");
+        registrationPage.successDefaultRegistration();
+
+        // Кнопка логоаута
+        LoginPageHT logout = new LoginPageHT();
+        loginPage.logout();
+
+    }
+
+    // 5. проверка параметров
+    @Test
+    void test10() {
+        // Страница логина
+        LoginPageHT loginPage = new LoginPageHT();
+        loginPage.login("standard_user", "stand_pass1");
+        loginPage.isLoginSuccessful("Иванов Иван Иванович");
+
+        // Страница поиска рейсов
+        SearchPageHT searchPage = new SearchPageHT();
+        searchPage.search("16.03.2026", "Москва", "Нью-Йорк");
+
+        // Страница со списком найденных рейсов
+        FlightsListPageHT flightsList = new FlightsListPageHT();
+        flightsList.registerToFirstFlight();
+
+        // Страница регистрации на рейс
+        RegistrationPageHT registrationPage = new RegistrationPageHT();
+        registrationPage.isFlightDataCorrect("Москва", "Нью-Йорк");
+        registrationPage.changeRegistrationParams("Буланов Андрей Анатольевич","1111 111111", "a.a.bulanowgmail.com","89170304453");
+        registrationPage.isErrorFillEmail();
+
+        // Кнопка логоаута
+        LoginPageHT logout = new LoginPageHT();
+        loginPage.logout();
+
+    }
 
 }
 

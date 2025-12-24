@@ -1,11 +1,11 @@
-package work.part07;
+package work.part07.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
-public class FlightsLoginPage {
+public class FlightsLoginPageHT {
     SelenideElement Auth, Username, Password, LoginButton, Message;
-    public FlightsLoginPage() {
+    public FlightsLoginPageHT() {
         Auth = $("div[id=loginContainer]");
         Username = $("#username");
         Password = $("#password");
