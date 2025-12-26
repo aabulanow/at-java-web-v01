@@ -1,26 +1,19 @@
 package work.part07;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
-import demo.part07.pages.FlightsListPage;
-import demo.part07.pages.RegistrationPage;
-import demo.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import work.part07.pages.FlightsListPageHT;
 import work.part07.pages.LoginPageHT;
 import work.part07.pages.RegistrationPageHT;
 import work.part07.pages.SearchPageHT;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
-
 @TestMethodOrder(MethodOrderer.DisplayName.class)
-public class POMFlightsTests {
+public class POMFlightsTestsHT {
     @BeforeAll
     static void beforeAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
@@ -35,18 +28,18 @@ public class POMFlightsTests {
 
 
 
-    // 5. проверка проверка залоченного пользователя
+    // 1. проверка залоченного пользователя
     @Test
-    void test07() {
+    void test01() {
         LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("locked_out_user", "lock_pass2");
         loginPage.isUserIsLocked();
 
     }
 
-    // 5. проверка параметров
+    // 2. Регистрация на рейс с изменением параметров пользователя + логаут
     @Test
-    void test09() {
+    void test02() {
         // Страница логина
         LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");
@@ -72,9 +65,9 @@ public class POMFlightsTests {
 
     }
 
-    // 5. проверка параметров
+    // 3. Регистрация на рейс с изменением параметров пользователя с некоректным email + логаут
     @Test
-    void test10() {
+    void test03() {
         // Страница логина
         LoginPageHT loginPage = new LoginPageHT();
         loginPage.login("standard_user", "stand_pass1");

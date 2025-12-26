@@ -1,41 +1,37 @@
 package work.part07;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import demo.part07.pages.FlightsListPage;
+import demo.part07.pages.LoginPage;
 import demo.part07.pages.RegistrationPage;
 import demo.part07.pages.SearchPage;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import work.part07.pages.FlightsListPageHT;
-import work.part07.pages.LoginPageHT;
-import work.part07.pages.RegistrationPageHT;
-import work.part07.pages.SearchPageHT;
+import work.part07.pages.*;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
-
 @TestMethodOrder(MethodOrderer.DisplayName.class)
-public class POMFlightsTests {
+public class POMFlightsTestsAviaSales {
     @BeforeAll
     static void beforeAll() {
         SelenideLogger.addListener("allure", new AllureSelenide());
+        Configuration.browser = "firefox";
     }
 
     @BeforeEach
     void setUp() {
-        open("https://slqamsk.github.io/cases/slflights/v01/");
+        open("http://travel.agileway.net/login");
         getWebDriver().manage().window().maximize();
     }
     // ... Автотесты
 
-
-
-    // 5. проверка проверка залоченного пользователя
     @Test
     void test07() {
         LoginPageHT loginPage = new LoginPageHT();
@@ -101,7 +97,3 @@ public class POMFlightsTests {
     }
 
 }
-
-
-
-
